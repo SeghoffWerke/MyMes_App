@@ -20,6 +20,15 @@ public class MainViewModel extends ViewModel{
 
     public MainViewModel() {
         auth = FirebaseAuth.getInstance();
+        // Если пользователь уже залогинился, то переход сразу на окно с пользователями
+        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() != null){
+                    userSys.setValue(firebaseAuth.getCurrentUser());
+                }
+            }
+        });
     }
 
     public MutableLiveData<String> getError() {
@@ -35,7 +44,8 @@ public class MainViewModel extends ViewModel{
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                userSys.setValue(authResult.getUser());
+                // В ней больше нет смысла, потомучто есть слушатель на уже авторизованного польз
+ //               userSys.setValue(authResult.getUser());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

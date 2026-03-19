@@ -1,5 +1,6 @@
 package com.example.mymesapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -92,8 +93,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
-                    Toast.makeText(MainActivity.this,
-                            "AUTORIZED", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this,
+//                            "AUTORIZED", Toast.LENGTH_SHORT).show();
+                    Intent intentU = UsersActivity.newIntent(MainActivity.this);
+                    startActivity(intentU);
+                    finish();
                 }
             }
         });
@@ -106,5 +110,9 @@ public class MainActivity extends AppCompatActivity {
         buttonSignUp = findViewById(R.id.buttonSignUp);
         textViewForgot = findViewById(R.id.textViewForgot);
         textViewRegister = findViewById(R.id.textViewRegister);
+    }
+
+    public static Intent newIntent(Context context){
+        return new Intent(context, MainActivity.class);
     }
 }
