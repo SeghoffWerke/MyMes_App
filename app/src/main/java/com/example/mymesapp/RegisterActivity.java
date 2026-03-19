@@ -3,6 +3,7 @@ package com.example.mymesapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -32,6 +33,17 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
         initViews();
+
+        buttonReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = editTextEmailReg.getText().toString().trim();
+                String password = editTextPassReg.getText().toString().trim();
+                String name = editTextName.getText().toString().trim();
+                String lastName = editTextLastName.getText().toString().trim();
+                int age = Integer.parseInt(editTextAge.getText().toString().trim());
+            }
+        });
     }
 
     public static Intent newIntent(Context context){
