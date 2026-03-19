@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MyMes App</string>
+    <string name="welcome">Welcome</string>
+    <string name="your_email">Your Email</string>
+    <string name="your_password">Your Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="registration">Registration</string>
+    <string name="forgot_password_title">Forgot Password</string>
+    <string name="your_email_forgot">Your Email</string>
+    <string name="forgot_button">Forgot</string>
+    <string name="registration_title">Registration</string>
+    <string name="your_email_register">Your Email</string>
+    <string name="your_password_reg">Your password</string>
+    <string name="your_name_reg">Your Name</string>
+    <string name="your_last_name_reg">Your Last Name</string>
+    <string name="age_reg">How Old are you?</string>
+    <string name="registration_button">Registration</string>
+</resources>

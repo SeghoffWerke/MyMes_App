@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "79033986746",
+    "firebase_url": "https://messenger-app-8574e-default-rtdb.firebaseio.com",
+    "project_id": "messenger-app-8574e",
+    "storage_bucket": "messenger-app-8574e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79033986746:android:98346ef304c4e6481ddc83",
+        "android_client_info": {
+          "package_name": "com.example.mymesapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA60C-UqbOdc5hyz1cwsJ-d2mK1Y0ls4Qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
