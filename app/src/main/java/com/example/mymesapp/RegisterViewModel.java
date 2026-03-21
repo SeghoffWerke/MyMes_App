@@ -20,13 +20,11 @@ public class RegisterViewModel extends ViewModel {
 
     public RegisterViewModel() {
         auth = FirebaseAuth.getInstance();
-        // Если пользователь уже залогинился, то переход сразу на окно с пользователями
+
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-              //     if (firebaseAuth.getCurrentUser() == null){
                 userReg.setValue(firebaseAuth.getCurrentUser());
-             //      }
             }
         });
     }
