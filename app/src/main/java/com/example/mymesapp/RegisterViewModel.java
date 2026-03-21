@@ -11,23 +11,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainViewModel extends ViewModel{
+public class RegisterViewModel extends ViewModel {
 
-   private FirebaseAuth auth;
+    private FirebaseAuth auth;
 
-   private MutableLiveData<String> error = new MutableLiveData<>();
-   private MutableLiveData<FirebaseUser> userSys = new MutableLiveData<>();
+    private MutableLiveData<String> error = new MutableLiveData<>();
+    private MutableLiveData<FirebaseUser> userReg = new MutableLiveData<>();
 
-
-    public MainViewModel() {
+    public RegisterViewModel() {
         auth = FirebaseAuth.getInstance();
         // Если пользователь уже залогинился, то переход сразу на окно с пользователями
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() != null){
-                    userSys.setValue(firebaseAuth.getCurrentUser());
-                }
+              //     if (firebaseAuth.getCurrentUser() == null){
+                userReg.setValue(firebaseAuth.getCurrentUser());
+             //      }
             }
         });
     }
@@ -36,23 +35,24 @@ public class MainViewModel extends ViewModel{
         return error;
     }
 
-    public LiveData<FirebaseUser> getUserSys() {
-        return userSys;
+    public LiveData<FirebaseUser> getUserReg() {
+        return userReg;
     }
 
-    public void logIn (String email, String password){
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                // В ней больше нет смысла, потомучто есть слушатель на уже авторизованного польз
- //               userSys.setValue(authResult.getUser());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+    public void  registerUp(
+            String email,
+            String password,
+            String name,
+            String lastName,
+            int age
+    ){
+        auth.createUserWithEmailAndPassword(email, password).addOnFailureListener(
+                new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 error.setValue(e.getMessage());
             }
         });
+
     }
 }
