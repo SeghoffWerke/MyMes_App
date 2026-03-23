@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,17 +52,17 @@ public class UsersActivity extends AppCompatActivity {
             }
         });
 
-        List<User> users = new ArrayList<>();
-        for (int i=0; i<20; i++){
-            User user = new User(
-                    "id " +i,
-                    "neme " +i,
-                    "lastName " +i,
-                    i, new Random().nextBoolean()
-            );
-            users.add(user);
-        }
-        usersAdapter.setUsers(users);
+//        List<User> users = new ArrayList<>();
+//        for (int i=0; i<20; i++){
+//            User user = new User(
+//              "id " + i,
+//              "name " + i,
+//              "last name " + i,
+//              i, new Random().nextBoolean()
+//            );
+//            users.add(user);
+//        }
+//        usersAdapter.setUsers(users);
     }
 
     private void initViews(){
@@ -83,6 +84,13 @@ public class UsersActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+            }
+        });
+        viewModel.getUsers().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+                Toast.makeText(UsersActivity.this, "observer yes", Toast.LENGTH_SHORT).show();
+                usersAdapter.setUsers(users);
             }
         });
     }

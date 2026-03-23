@@ -21,6 +21,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     public void setUsers(List<User> users) {
         this.users = users;
         notifyDataSetChanged();
+
     }
     // Добавляем ссылку на Интерфейс слушателя Клика
     private OnUserClickListener onUserClickListener;
