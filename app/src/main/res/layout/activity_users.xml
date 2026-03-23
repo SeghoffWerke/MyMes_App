@@ -17,7 +17,7 @@
         android:textSize="26sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_margin="16dp"
+
         />
     <Button
         android:id="@+id/buttonLogOff"
@@ -29,5 +29,15 @@
         android:gravity="center"
         android:layout_margin="16dp"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#33330055"
+        android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:context=".UsersActivity"
+        tools:listitem="@layout/user_item" />
 
 </LinearLayout>

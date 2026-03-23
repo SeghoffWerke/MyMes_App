@@ -13,13 +13,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class UsersActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerViewUsers;
+    private UsersAdapter usersAdapter;
     private UsersViewModel viewModel;
-
     private Button buttonLogOff;
 
     @Override
@@ -33,6 +39,7 @@ public class UsersActivity extends AppCompatActivity {
             return insets;
         });
 
+        initViews();
         buttonLogOff = findViewById(R.id.buttonLogOff);
         viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
         observeViewModel();
@@ -43,8 +50,25 @@ public class UsersActivity extends AppCompatActivity {
                 viewModel.logOff();
             }
         });
+
+        List<User> users = new ArrayList<>();
+        for (int i=0; i<20; i++){
+            User user = new User(
+                    "id " +i,
+                    "neme " +i,
+                    "lastName " +i,
+                    i, new Random().nextBoolean()
+            );
+            users.add(user);
+        }
+        usersAdapter.setUsers(users);
     }
 
+    private void initViews(){
+        recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
+        usersAdapter = new UsersAdapter();
+        recyclerViewUsers.setAdapter(usersAdapter);
+    }
 
     public static Intent newIntent(Context context){
         return new Intent(context, UsersActivity.class);
