@@ -23,11 +23,14 @@ import java.util.List;
 import java.util.Random;
 
 public class UsersActivity extends AppCompatActivity {
+    private static final String EXTRA_CURRENT_USER_ID = "current_id";
 
     private RecyclerView recyclerViewUsers;
     private UsersAdapter usersAdapter;
     private UsersViewModel viewModel;
     private Button buttonLogOff;
+
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,6 @@ public class UsersActivity extends AppCompatActivity {
         buttonLogOff = findViewById(R.id.buttonLogOff);
         viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
         observeViewModel();
-
         buttonLogOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,17 +54,17 @@ public class UsersActivity extends AppCompatActivity {
             }
         });
 
-//        List<User> users = new ArrayList<>();
-//        for (int i=0; i<20; i++){
-//            User user = new User(
-//              "id " + i,
-//              "name " + i,
-//              "last name " + i,
-//              i, new Random().nextBoolean()
-//            );
-//            users.add(user);
-//        }
-//        usersAdapter.setUsers(users);
+        currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
+
+        // При клике на пользователя будем переходить в чат
+        usersAdapter.setOnUserClickListener(new UsersAdapter.OnUserClickListener() {
+            @Override
+            public void onUserClick(User user) {
+                Intent intent = ChatActivity.newIntent(UsersActivity.this,
+                        currentUserId, user.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void initViews(){
@@ -71,8 +73,10 @@ public class UsersActivity extends AppCompatActivity {
         recyclerViewUsers.setAdapter(usersAdapter);
     }
 
-    public static Intent newIntent(Context context){
-        return new Intent(context, UsersActivity.class);
+    public static Intent newIntent(Context context, String currentUserId){
+        Intent intent = new Intent(context, UsersActivity.class);
+        intent.putExtra(EXTRA_CURRENT_USER_ID, currentUserId);
+        return intent;
     }
 
     private void observeViewModel (){

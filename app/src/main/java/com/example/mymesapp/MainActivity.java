@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 if (firebaseUser != null) {
 //                    Toast.makeText(MainActivity.this,
 //                            "AUTORIZED", Toast.LENGTH_SHORT).show();
-                    Intent intentU = UsersActivity.newIntent(MainActivity.this);
+                    Intent intentU = UsersActivity.newIntent(MainActivity.this, firebaseUser.getUid());
                     startActivity(intentU);
                     finish();
                 }
