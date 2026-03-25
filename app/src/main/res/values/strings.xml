@@ -60,4 +60,5 @@
     </string>
     <string name="users_label">Пользователи</string>
     <string name="log_out">Log Out</string>
+    <string name="type_your_message">Type Your message</string>
 </resources>
