@@ -79,6 +79,10 @@ public class ChatViewModel extends ViewModel {
         return messageSent;
     }
 
+    public void setUserOnline (Boolean isOnline){
+        referenceUsers.child(currentUserId).child("online").setValue(isOnline);
+    }
+
     public void sendMessage (Message message){
         //Записываем сообщение в БД по структуре записей
         referenceMessages

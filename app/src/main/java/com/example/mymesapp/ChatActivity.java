@@ -4,6 +4,7 @@ import static com.example.mymesapp.UsersActivity.newIntent;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -81,29 +83,7 @@ public class ChatActivity extends AppCompatActivity {
                 viewModel.sendMessage(message);
             }
         });
-
-//        List<Message> messages = new ArrayList<>();
-//
-//        for (int i=0; i<10; i++){
-//            Message message = new Message(
-//                    "Текст " + i,
-//                    currentUserId,
-//                    otherUserId
-//            );
-//            messages.add(message);
-//        }
-//
-//        for (int i=0; i<10; i++){
-//            Message message = new Message(
-//                    "Текст " + i,
-//                    otherUserId,
-//                    currentUserId
-//            );
-//            messages.add(message);
-//        }
-//        messagesAdapter.setMessages(messages);
     }
-
     // Подписываемся на все Лайф даты из Втю Модели
     public void observeViewModel(){
         viewModel.getMessagesList().observe(this, new Observer<List<Message>>() {
@@ -137,6 +117,16 @@ public class ChatActivity extends AppCompatActivity {
                 //в верхней части экрана записываем Имя и Фамилию пользователя с кем переписываемся
                 String userInfo = String.format("%s, %s", user.getName(), user.getLastName());
                 textViewTitle.setText(userInfo);
+                // Выбираем цвет он-лайн или нет
+                int bgResId;
+                if (user.getOnline()){
+                    bgResId = R.drawable.circle_green;
+                } else {
+                    bgResId = R.drawable.circle_red;
+                }
+                // Устанавливаем признак он-лайна
+                Drawable background = ContextCompat.getDrawable(ChatActivity.this, bgResId);
+                onLineStatus.setBackground(background);
             }
         });
     }
@@ -146,6 +136,17 @@ public class ChatActivity extends AppCompatActivity {
         recyclerViewMessages = findViewById(R.id.recyclerViewMessages);
         editTextMessage = findViewById(R.id.editTextMessage);
         imageViewSent = findViewById(R.id.imageViewSent);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.setUserOnline(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        viewModel.setUserOnline(false);
     }
 
     public static Intent newIntent (Context context, String currentUserId, String otherUserId){
