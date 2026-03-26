@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,27 +66,79 @@ public class ChatActivity extends AppCompatActivity {
         // 2 параметра
         // А сделать это можно через viewModel Фэктори
         viewModel = new ViewModelProvider(this, viewModelFactory).get(ChatViewModel.class);
+        observeViewModel();
 
-        List<Message> messages = new ArrayList<>();
+        // Добавляем слушатель на кнопку Отправить сообщение
 
-        for (int i=0; i<10; i++){
-            Message message = new Message(
-                    "Текст " + i,
-                    currentUserId,
-                    otherUserId
-            );
-            messages.add(message);
-        }
+        imageViewSent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Message message = new Message(
+                        editTextMessage.getText().toString().trim(),
+                        currentUserId,
+                        otherUserId
+                );
+                viewModel.sendMessage(message);
+            }
+        });
 
-        for (int i=0; i<10; i++){
-            Message message = new Message(
-                    "Текст " + i,
-                    otherUserId,
-                    currentUserId
-            );
-            messages.add(message);
-        }
-        messagesAdapter.setMessages(messages);
+//        List<Message> messages = new ArrayList<>();
+//
+//        for (int i=0; i<10; i++){
+//            Message message = new Message(
+//                    "Текст " + i,
+//                    currentUserId,
+//                    otherUserId
+//            );
+//            messages.add(message);
+//        }
+//
+//        for (int i=0; i<10; i++){
+//            Message message = new Message(
+//                    "Текст " + i,
+//                    otherUserId,
+//                    currentUserId
+//            );
+//            messages.add(message);
+//        }
+//        messagesAdapter.setMessages(messages);
+    }
+
+    // Подписываемся на все Лайф даты из Втю Модели
+    public void observeViewModel(){
+        viewModel.getMessagesList().observe(this, new Observer<List<Message>>() {
+            @Override
+            public void onChanged(List<Message> messages) {
+                messagesAdapter.setMessages(messages);
+            }
+        });
+
+        viewModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errorMessage) {
+                if (errorMessage != null){
+                    Toast.makeText(ChatActivity.this,
+                            errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        viewModel.getMessageSent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSent) {
+                // Очищаем поле для ввода текста
+                editTextMessage.setText("");
+            }
+        });
+
+        viewModel.getOtherUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                //в верхней части экрана записываем Имя и Фамилию пользователя с кем переписываемся
+                String userInfo = String.format("%s, %s", user.getName(), user.getLastName());
+                textViewTitle.setText(userInfo);
+            }
+        });
     }
     private void initViews(){
         textViewTitle = findViewById(R.id.textViewTitle);
