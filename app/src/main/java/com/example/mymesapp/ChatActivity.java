@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ public class ChatActivity extends AppCompatActivity {
     private String currentUserId;
     private String otherUserId;
 
+    private ChatViewModel viewModel;
+    private ChatViewModelFactory viewModelFactory;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +53,17 @@ public class ChatActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        initViews();
         currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
         otherUserId = getIntent().getStringExtra(EXTRA_OTHER_USER_ID);
+        initViews();
+        //Фэктори сам вызывает Вью Модель и сам передаёт в неё параметры
+        viewModelFactory = new ChatViewModelFactory(currentUserId, otherUserId);
         messagesAdapter = new MessagesAdapter(currentUserId);
         recyclerViewMessages.setAdapter(messagesAdapter);
+        // Если так запускать viewModel то приложение УПАДЁТ так как туда надо передать
+        // 2 параметра
+        // А сделать это можно через viewModel Фэктори
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(ChatViewModel.class);
 
         List<Message> messages = new ArrayList<>();
 

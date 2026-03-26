@@ -30,7 +30,7 @@ public class ChatViewModel extends ViewModel {
     private String currentUserId;
     private String otherUserId;
 
-    public ChatViewModel(String otherUserId, String currentUserId) {
+    public ChatViewModel(String currentUserId, String otherUserId) {
         this.otherUserId = otherUserId;
         this.currentUserId = currentUserId;
         referenceUsers.child(otherUserId).addValueEventListener(new ValueEventListener() {
