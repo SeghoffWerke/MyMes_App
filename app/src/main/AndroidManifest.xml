@@ -12,7 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMesApp">
         <activity
+            android:name=".ChatActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+        <activity
+            android:name=".UsersActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".ForgotActivity"

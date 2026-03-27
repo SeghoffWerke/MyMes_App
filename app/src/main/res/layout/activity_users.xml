@@ -5,39 +5,39 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     android:orientation="vertical"
-    android:layout_margin="8dp"
-    tools:context=".ForgotActivity">
+    tools:context=".UsersActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textAlignment="center"
+        android:id="@+id/textViewWelcome"
+        android:text="@string/users_label"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:layout_margin="16dp"
-        android:text="@string/forgot_password_title"
-        />
+        android:gravity="center"
 
-    <EditText
-        android:id="@+id/editTextEmailForgot"
+        />
+    <Button
+        android:id="@+id/buttonLogOff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/log_out"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:hint="@string/your_email_forgot"
-        android:inputType="textEmailAddress"
+        android:gravity="center"
         android:layout_margin="16dp"
         />
 
-    <Button
-        android:id="@+id/buttonForgot"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="@string/forgot_button"
-        android:layout_margin="16dp"
-        />
+        android:background="#33330055"
+        android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:context=".UsersActivity"
+        tools:listitem="@layout/user_item" />
 
 </LinearLayout>
