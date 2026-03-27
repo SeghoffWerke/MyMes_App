@@ -81,6 +81,7 @@ public class UsersViewModel extends ViewModel {
     }
 
     public void logOff(){
+        setUserOnline(false);
         auth.signOut();
     }
 }

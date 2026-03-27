@@ -93,7 +93,7 @@ public class UsersActivity extends AppCompatActivity {
         viewModel.getUsers().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
-                Toast.makeText(UsersActivity.this, "observer yes", Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(UsersActivity.this, "observer yes", Toast.LENGTH_SHORT).show();
                 usersAdapter.setUsers(users);
             }
         });
